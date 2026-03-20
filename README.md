@@ -24,7 +24,9 @@ Run it via the existing launcher:
 
 `./sl --language=lama path/to/file.lama`
 
+to run all lama test,
 
+`./run_lama_tests.sh`
 
 # Building a Native Image
 
