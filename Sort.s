@@ -1,6 +1,6 @@
-	.file "/home/doctor/lamacGraal/simplelanguage/hw2/performance/Sort.lama"
+	.file "/home/doctor/PlissVmTrafle/test/simplelanguageAndLama/hw2/performance/Sort.lama"
 
-	.stabs "/home/doctor/lamacGraal/simplelanguage/hw2/performance/Sort.lama",100,0,0,.Ltext
+	.stabs "/home/doctor/PlissVmTrafle/test/simplelanguageAndLama/hw2/performance/Sort.lama",100,0,0,.Ltext
 
 	.globl	main
 
@@ -222,9 +222,9 @@ L1:
 
 .L1:
 
-# CONST (10)
+# CONST (5000)
 
-	movq	$21,	%r10
+	movq	$10001,	%r10
 # CALL ("Lgenerate", 1, false)
 
 	pushq	%rdi

@@ -32,3 +32,20 @@ to run all lama test,
 
 Build the project with `mvn package -Pnative`.
 To run simple language natively run `./standalone/target/slnative`.
+
+
+
+Итог
+на jvm
+`real    0m34.783s
+user    1m23.531s
+sys     0m1.467s`
+на нативном
+'real    0m49.409s
+user    0m47.582s
+sys     0m1.799s'
+Компилятор 
+'real    0m26.530s
+user    0m24.733s
+sys     0m1.776s'
+
