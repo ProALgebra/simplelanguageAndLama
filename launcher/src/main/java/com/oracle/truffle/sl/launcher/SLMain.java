@@ -55,7 +55,8 @@ import org.graalvm.polyglot.Value;
 
 public final class SLMain {
 
-    private static final String SL = "sl";
+    private static final String DEFAULT_LANGUAGE = "sl";
+    private static final String LANGUAGE_OPTION_PREFIX = "--language=";
 
     /**
      * The main entry point.
@@ -65,9 +66,12 @@ public final class SLMain {
         Map<String, String> options = new HashMap<>();
         String file = null;
         boolean launcherOutput = true;
+        String language = DEFAULT_LANGUAGE;
         for (String arg : args) {
             if (arg.equals("--disable-launcher-output")) {
                 launcherOutput = false;
+            } else if (arg.startsWith(LANGUAGE_OPTION_PREFIX)) {
+                language = arg.substring(LANGUAGE_OPTION_PREFIX.length());
             } else if (parseOption(options, arg)) {
                 continue;
             } else {
@@ -79,20 +83,20 @@ public final class SLMain {
 
         if (file == null) {
             // @formatter:off
-            source = Source.newBuilder(SL, new InputStreamReader(System.in), "<stdin>").interactive(!launcherOutput).build();
+            source = Source.newBuilder(language, new InputStreamReader(System.in), "<stdin>").interactive(!launcherOutput).build();
             // @formatter:on
         } else {
-            source = Source.newBuilder(SL, new File(file)).interactive(!launcherOutput).build();
+            source = Source.newBuilder(language, new File(file)).interactive(!launcherOutput).build();
         }
 
-        System.exit(executeSource(source, System.in, System.out, options, launcherOutput));
+        System.exit(executeSource(language, source, System.in, System.out, options, launcherOutput));
     }
 
-    private static int executeSource(Source source, InputStream in, PrintStream out, Map<String, String> options, boolean launcherOutput) {
+    private static int executeSource(String language, Source source, InputStream in, PrintStream out, Map<String, String> options, boolean launcherOutput) {
         Context context;
         PrintStream err = System.err;
         try {
-            context = Context.newBuilder(SL).in(in).out(out).options(options).allowAllAccess(true).build();
+            context = Context.newBuilder(language).in(in).out(out).options(options).allowAllAccess(true).build();
         } catch (IllegalArgumentException e) {
             err.println(e.getMessage());
             return 1;
@@ -104,11 +108,11 @@ public final class SLMain {
 
         try {
             Value result = context.eval(source);
-            if (context.getBindings(SL).getMember("main") == null) {
+            if (DEFAULT_LANGUAGE.equals(language) && context.getBindings(DEFAULT_LANGUAGE).getMember("main") == null) {
                 err.println("No function main() defined in SL source file.");
                 return 1;
             }
-            if (launcherOutput && !result.isNull()) {
+            if (launcherOutput && DEFAULT_LANGUAGE.equals(language) && !result.isNull()) {
                 out.println(result.toString());
             }
             return 0;

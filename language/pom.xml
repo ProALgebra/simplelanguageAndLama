@@ -50,6 +50,30 @@
   <build> 
     <plugins>
       <plugin>
+        <groupId>org.antlr</groupId>
+        <artifactId>antlr4-maven-plugin</artifactId>
+        <version>4.13.2</version>
+        <executions>
+          <execution>
+            <id>antlr-lama</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>antlr4</goal>
+            </goals>
+            <configuration>
+              <sourceDirectory>${project.basedir}/src/main/antlr4</sourceDirectory>
+              <outputDirectory>${project.build.directory}/generated-sources/antlr4</outputDirectory>
+              <visitor>true</visitor>
+              <listener>false</listener>
+              <arguments>
+                <argument>-package</argument>
+                <argument>com.oracle.truffle.lama.parser</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-eclipse-plugin</artifactId>
         <configuration>
@@ -64,6 +88,7 @@
         <version>3.1.2</version>
         <configuration>
            <argLine>
+               -Xss16m
                --add-exports=java.base/jdk.internal.module=truffle.tck
             </argLine>
             <includes>
@@ -72,6 +97,9 @@
             </includes>
         </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
@@ -79,8 +107,7 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.11.0</version>
           <configuration>
-            <source>17</source>
-            <target>17</target>
+            <release>${maven.compiler.source}</release>
 	     <annotationProcessorPaths>
 	       <path>
 	        <groupId>org.graalvm.truffle</groupId>

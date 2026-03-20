@@ -17,6 +17,15 @@ For instructions on how to get started please refer to [our website](http://www.
 Build the project with `mvn package`.
 To run simple language using a JDK from JAVA_HOME run `./sl`.
 
+# Running Lama (work in progress)
+
+The repository also contains an experimental `lama` Truffle language (text interpreter, no imports yet).
+Run it via the existing launcher:
+
+`./sl --language=lama path/to/file.lama`
+
+
+
 # Building a Native Image
 
 Build the project with `mvn package -Pnative`.

@@ -45,9 +45,11 @@ module org.graalvm.sl {
   requires org.antlr.antlr4.runtime;
   requires org.graalvm.polyglot;
   requires org.graalvm.truffle;
-  exports com.oracle.truffle.sl to org.graalvm.sl.test;
-  exports com.oracle.truffle.sl.runtime to org.graalvm.sl.test;
-  exports com.oracle.truffle.sl.builtins to org.graalvm.sl.test;
+  exports com.oracle.truffle.sl;
+  exports com.oracle.truffle.sl.runtime;
+  exports com.oracle.truffle.sl.builtins;
+  exports com.oracle.truffle.lama;
   provides  com.oracle.truffle.api.provider.TruffleLanguageProvider with
-    com.oracle.truffle.sl.SLLanguageProvider;
+    com.oracle.truffle.sl.SLLanguageProvider,
+    com.oracle.truffle.lama.LamaLanguageProvider;
 }
