@@ -123,6 +123,10 @@
                                     <commandlineArgs>
                                         -p %classpath
                                         -H:+ReportExceptionStackTraces
+                                        -H:-TruffleCheckBlockListMethods
+                                        -H:-TruffleCheckBlackListedMethods
+                                        -H:-TruffleCheckNeverPartOfCompilation
+                                        -H:MaxRuntimeCompileMethods=0
                                         -m ${launcherClass}
                                         -o ${project.build.directory}/slnative
                                     </commandlineArgs>
@@ -140,6 +144,12 @@
             <groupId>com.oracle</groupId>
             <artifactId>launcher</artifactId>
             <version>1.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.graalvm.truffle</groupId>
+                    <artifactId>truffle-runtime</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>
